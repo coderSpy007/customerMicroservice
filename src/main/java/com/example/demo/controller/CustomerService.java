@@ -22,4 +22,8 @@ public class CustomerService {
     public Optional<Customer> searchById(Integer id) {
         return repo.findById(id);
     }
+
+    public Customer save(Customer customer) {
+        return repo.save(customer);
+    }
 }

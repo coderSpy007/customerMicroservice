@@ -22,31 +22,31 @@ import com.example.demo.repository.CustomerRepository;
 public class CustomerController {
 
 	@Autowired
-	private CustomerRepository repository;
+	private CustomerService service;
 
 	public CustomerController() {
 	}
 
 	public CustomerController(CustomerRepository repository) {
-		this.repository = repository;
+		this.service = service;
 	}
 
 	// http://localhost:8080/api/customer?name=aom
 	@GetMapping("/customer")
 	public List<Customer> searchCustomer(@RequestParam("name") String name) {
-		return repository.findByName(name);
+		return service.searchByName(name);
 
 	}
 
 	@GetMapping("/customer/{id}")
 	public Optional<Customer> searchCustomer(@PathVariable("id") Integer id) {
-		return repository.findById(id);
+		return service.searchById(id);
 	}
 
 	@PostMapping("/customer")
 	public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
 		try {
-			Customer savedCustomer = repository.save(customer);
+			Customer savedCustomer = service.save(customer);
 			return new ResponseEntity<>(savedCustomer, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
